@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Consent Popup (Fixed)</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 100px; 
+        }
+
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* The Popup Container */
+        #cookie-consent-popup {
+            /* * PERBAIKAN: 
+             * Aturan dasarnya HANYA display: none.
+             * Properti flex ('display: flex', 'justify-content', 'align-items') 
+             * telah dipindahkan ke aturan '.show' di bawah.
+             */
+            display: none; 
+            
+            /* Styling posisi dan warna */
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #222;
+            color: white;
+            padding: 20px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+            box-sizing: border-box; 
+            z-index: 1000;
+        }
+        
+        /* * PERBAIKAN: 
+         * Properti 'display: flex' dan perataannya ('justify-content', 'align-items') 
+         * hanya berlaku KETIKA class '.show' ditambahkan oleh JavaScript.
+         */
+        #cookie-consent-popup.show {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .popup-text {
+            margin: 0;
+            padding-right: 20px;
+        }
+
+        #accept-cookie-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            white-space: nowrap;
+            transition: background-color 0.3s ease;
+        }
+
+        #accept-cookie-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-content">
+        <h1>Welcome to Our Website</h1>
+        <p>This is the main content of the page.</p>
+        <p>A cookie consent popup will appear at the bottom if you haven't accepted it yet.</p>
+    </div>
+
+    <div id="cookie-consent-popup">
+        <p class="popup-text">
+            We use cookies to ensure you get the best experience on our website.
+        </p>
+        <button id="accept-cookie-btn">Accept</button>
+    </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            const popup = document.getElementById("cookie-consent-popup");
+            const acceptBtn = document.getElementById("accept-cookie-btn");
+
+            if (localStorage.getItem("cookieConsent") !== "accepted") {
+                popup.classList.add("show");
+            }
+
+            acceptBtn.addEventListener("click", function() {
+                popup.classList.remove("show");
+                localStorage.setItem("cookieConsent", "accepted");
+            });
+
+        });
+    </script>
+
+</body>
+</html>
